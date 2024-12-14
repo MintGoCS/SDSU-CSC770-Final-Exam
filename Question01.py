@@ -1,4 +1,4 @@
-# The code is for "CSC770 Final Exam".
+"""The code is for CSC770 Final Exam."""
 
 # Question 1
 
@@ -30,10 +30,10 @@ class Person:
         # No child in the household.
         if self.children == 0:
             return 0
-        # 1 child in the household.
+        # Have 1 child in the household.
         elif self.children == 1:
             return 1
-        # having more than 2 children in the household.
+        # Have more than 2 children in the household.
         else:
             return "more_than_2"
 
