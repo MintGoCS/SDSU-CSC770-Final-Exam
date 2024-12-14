@@ -3,7 +3,7 @@
 # Question 1
 
 # Definition of Social Security rate.
-SOCIAL_SECURITY_RATE = 0.65
+SOCIAL_SECURITY_RATE = 0.065
 
 
 class Person:
@@ -22,6 +22,10 @@ class Person:
     ]
 
     def __init__(self, income, children):
+        if income < 0:
+            raise ValueError("Invalid number of income")
+        elif children < 0:
+            raise ValueError("Invalid number of children")
         self.income = income
         self.children = children
 
@@ -34,7 +38,7 @@ class Person:
         elif self.children == 1:
             return 1
         # Have more than 2 children in the household.
-        else:
+        elif self.children >= 2:
             return "more_than_2"
 
     def calculate_base_tax(self):
@@ -47,14 +51,14 @@ class Person:
             if left_income <= self.income <= right_income:
                 tax_rate = rule["rates"].get(self.get_children_key())
                 return self.income * tax_rate
-        raise ValueError("Invalid income range.")
+        # raise ValueError("Invalid income range.")
 
 
 class BlindPeople(Person):
     """Blind people will not pay income tax if income is lower than $65,000,
     but still need to pay Social Security Tax."""
 
-    def calculate_tax_rate(self):
+    def calculate_tax(self):
         # Calculate the social security.
         social_security = SOCIAL_SECURITY_RATE * self.income
 
@@ -73,11 +77,12 @@ class BlindPeople(Person):
 class FullTimeMilitary(Person):
     """Full time military people will apply 75% discount of Income tax rate and Social Security Tax."""
 
-    def calculate_tax_rate(self):
+    def calculate_tax(self):
         SPECIAL_DISCOUNT = 0.75
 
         # Calculate the social security with a discount.
         social_security = SOCIAL_SECURITY_RATE * self.income * SPECIAL_DISCOUNT
+
         # Calculate the income tax with a discount.
         base_tax = self.calculate_base_tax() * SPECIAL_DISCOUNT
 
@@ -92,12 +97,30 @@ class FullTimeStudent(Person):
     """Full time student will apply 70% discount of Income tax rate
     but no discount on Social Security Tax."""
 
-    def calculate_tax_rate(self):
+    def calculate_tax(self):
         SPECIAL_DISCOUNT = 0.7
 
         # Calculate the social security and income tax.
         social_security = SOCIAL_SECURITY_RATE * self.income
+
+        # Calculate the income tax and apply special discounts for Full Time Students.
         base_tax = self.calculate_base_tax() * SPECIAL_DISCOUNT
+
+        # Sum up the social security and income tax.
+        total_tax = social_security + base_tax
+
+        return total_tax
+
+
+class NormalTaxpayer(Person):
+    """This is for normal taxpayer."""
+
+    def calculate_tax(self):
+        # Calculate the social security and income tax.
+        social_security = SOCIAL_SECURITY_RATE * self.income
+
+        # Calculate the income tax.
+        base_tax = self.calculate_base_tax()
 
         # Sum up the social security and income tax.
         total_tax = social_security + base_tax
