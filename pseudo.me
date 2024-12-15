@@ -1,0 +1,46 @@
+
+function calculate_mccabe(Code: your_code){
+
+
+
+
+}
+
+
+
+
+
+function draw_control_flow_graph(your_code){
+    '*
+	This is function is used to draw a control graph.
+	*'
+
+    # Initialize an empty graph which is a Linklist data type.
+    Linklist graph;
+
+	# Set the head node as None.
+    prev_node = None;
+
+    # Go through each line of code
+    for line in source_code:
+		# Judge if this is a decision statement.
+		if line.get_word(keywords=["if", "while"] > 0 then isDecision = True
+        	if isDecision:
+			# Convert a line of statement into string then store into node.
+                string node = create_node(line)
+            	graph.add_node(node)  # 将节点加入图
+            	if prev_node IS NOT None:
+                	graph.add_edge(prev_node, node)  # 添加边
+            	prev_node = node
+        	elif is_return_statement(line):  # 判断是否是 return 语句
+            	node = create_node(line)  # 创建节点
+            	graph.add_node(node)
+            	graph.add_edge(prev_node, node)  # 从上一个节点指向当前节点
+        	else:  # 普通语句
+            	node = create_node(line)
+            	graph.add_node(node)
+            	if prev_node IS NOT None:
+                	graph.add_edge(prev_node, node)
+            	prev_node = node
+
+}
