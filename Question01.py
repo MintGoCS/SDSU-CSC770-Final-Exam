@@ -1,4 +1,4 @@
-"""The code is for CSC770 Final Exam."""
+"""This file is for CSC770 Final Exam."""
 
 # Question 1
 
@@ -9,15 +9,14 @@ SOCIAL_SECURITY_RATE = 0.065
 class Person:
     # Define the rate into a list based on an individual's income and number of descendents.
     TAX_RATES = [
-        # 1. Mapping the income range into a tuple.
-        # 2. Mapping the number of descents into the dictionary.
-        # 0 -> No child, 1 -> one child, "more_than_2" -> having more than 2 children
+        # Use the tuple to define the range of income.
+        # Mapping the number of children into the dictionary.
         {"income_range": (0, 25000), "rates": {0: 0.1, 1: 0.08, "more_than_2": 0.06}},
-        {"income_range": (25001, 55000), "rates": {0: 0.15, 1: 0.12, "more_than_2": 0.11}},
-        {"income_range": (55001, 105000), "rates": {0: 0.25, 1: 0.23, "more_than_2": 0.2}},
-        {"income_range": (105001, 205000), "rates": {0: 0.27, 1: 0.25, "more_than_2": 0.3}},
-        {"income_range": (205001, 255000), "rates": {0: 0.3, 1: 0.28, "more_than_2": 0.3}},
-        {"income_range": (255001, 405000), "rates": {0: 0.4, 1: 0.36, "more_than_2": 0.3}},
+        {"income_range": (25000, 55000), "rates": {0: 0.15, 1: 0.12, "more_than_2": 0.11}},
+        {"income_range": (55000, 105000), "rates": {0: 0.25, 1: 0.23, "more_than_2": 0.2}},
+        {"income_range": (105000, 205000), "rates": {0: 0.27, 1: 0.25, "more_than_2": 0.3}},
+        {"income_range": (205000, 255000), "rates": {0: 0.3, 1: 0.28, "more_than_2": 0.3}},
+        {"income_range": (255000, 405000), "rates": {0: 0.4, 1: 0.36, "more_than_2": 0.3}},
         {"income_range": (405000, float("inf")), "rates": {0: 0.5, 1: 0.5, "more_than_2": 0.5}},
     ]
 
@@ -48,7 +47,7 @@ class Person:
             left_income, right_income = rule["income_range"]
 
             # If a person's income is within in the range.
-            if left_income <= self.income <= right_income:
+            if left_income <= self.income < right_income:
                 tax_rate = rule["rates"].get(self.get_children_key())
                 return self.income * tax_rate
         # raise ValueError("Invalid income range.")
